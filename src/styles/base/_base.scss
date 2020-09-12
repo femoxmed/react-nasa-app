@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Erica+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+html {
+  font-size: 62.5%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $white;
+  color: $dark-color;
+  font-family: 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.container {
+  display: flex;
+}
+
+.padding-left-right {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container-fluid {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.col-7 {
+  flex: 0 0 58.33333%;
+  max-width: 58.33333%;
+
+  @media (max-width: 767.98px) {
+    max-width: unset;
+  }
+}
+
+.col-8 {
+  flex: 0 0 66.66667%;
+  max-width: 66.66667%;
+  -webkit-box-flex: 0;
+  @media (max-width: 767.98px) {
+    max-width: unset;
+  }
+}
+
+.col-4 {
+  flex: 0 0 33.33333%;
+  max-width: 33.33333%;
+  -webkit-box-flex: 0;
+
+  @media (max-width: 767.98px) {
+    max-width: unset;
+  }
+}
+
+.center-items {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.space-between-header {
+  @media (max-width: 767.98px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.brand-aside {
+  font: bolder 2.2rem sans-serif;
+  // letter-spacing: 0.2rem;
+  line-height: 2.4rem;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap;
+  writing-mode: vertical-lr;
+  -webkit-writing-mode: vertical-lr;
+  -ms-writing-mode: vertical-lr;
+  position: absolute;
+  h3 {
+    padding: $s-size;
+  }
+  @media (max-width: $md-devices) {
+    display: none;
+  }
+}
+
+.controls {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.margin-left-5 {
+  margin-left: 5px;
+}
+
+.margin-bottom-5 {
+  margin-bottom: 5px;
+}

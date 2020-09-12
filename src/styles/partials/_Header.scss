@@ -1,0 +1,18 @@
+.header {
+  background-color: $white;
+  //   box-shadow: 0.2rem 0.8rem 0.3rem rgba($color: $white, $alpha: 1);
+  color: $dark-color;
+  min-height: 2.5rem;
+  padding: $s-size;
+  margin-bottom: 2rem;
+}
+
+.header__brand {
+  font-size: $font-size-small;
+  margin-right: 5rem;
+
+  @media (max-width: $sm-devices) {
+    font-size: $font-size-large;
+    margin-bottom: $s-size;
+  }
+}
