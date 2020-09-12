@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({
   const handleSetDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
     // if (new Date()) {
-      setDisabledButton(true);
+      setDisabledButton(false);
     // }
     setDate(date);
   };
