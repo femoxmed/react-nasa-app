@@ -23,6 +23,7 @@ function App(props: any) {
   const [loading, setLoading] = useState(true);
   let [date, setDate] = useState(new Date());
   const [disableButton, setDisableButton] = useState(false);
+  const [todayData, setTodayData ] = useState(false)
 
   const today: string = formatDate(date);
 
@@ -57,7 +58,7 @@ const disableButtonNext = (dateData:any) => {
   };
 
   const loadPicture = async () => {
-   
+   setTodayData(true)
        // load picture of the day from local storage
     let picOfTheDay: any = localStorage.getItem(PICOFTHEDAY);
 
@@ -132,13 +133,17 @@ const disableButtonNext = (dateData:any) => {
               date={date}
               setDate={setDate}
             />
-            
-            <Apod
+       { todayData && props.apod.data.code === 404 ?  <Error
+              errorMessage={props.apod.data.msg}
+              onClick={() => window.location.reload()}
+              actionTitle='refresh'
+            /> :  <Apod
             //  date={date}
               disableButton={disableButton}
               setDisabledButton={setDisableButton}
               data={props.apod.data}
-            />
+            />}
+            
           </div>
         )}
       </div>
