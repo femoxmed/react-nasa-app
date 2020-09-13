@@ -43,19 +43,24 @@ const Apod: React.FC<ApodProps> = ({
   const buttonRef: React.MutableRefObject<undefined> = useRef(undefined);
   const checkDateDiff = () => {
     const date = new Date(queryDate);
-    const today = new Date();
-    if (!queryDate && today) {
-      setDisabledButton(true);
-    } else if (today.getDate() === date.getDate()) {
-      setDisabledButton(true);
-    }
+    const today = Date.now();
+   let todayUtc =  new Date().toISOString().slice(0, 10);
+   if(!queryDate)  return  setDisabledButton(false);
+   if( date.getTime() >= today || todayUtc === queryDate) {
+    setDisabledButton(true);
+   }
+   else {
+    setDisabledButton(false);
+   }
+ 
   };
+
 
   useEffect(() => {
     checkDateDiff();
     checkIsFavorite(data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryDate, isFavorite, data]);
+  }, [queryDate, isFavorite, data, disableButton]);
 
   const checkIsFavorite = (data: any) => {
     let favorites: object[] = [];
@@ -143,10 +148,10 @@ const Apod: React.FC<ApodProps> = ({
   };
 
   const loadFromNextDay = () => {
+    checkDateDiff();
     let today: Date = new Date();
     let day: number = today.getDate();
 
-    checkDateDiff();
 
     if (!queryDate) {
       day += 1;

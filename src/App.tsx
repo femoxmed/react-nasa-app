@@ -26,6 +26,18 @@ function App(props: any) {
 
   const today: string = formatDate(date);
 
+const disableButtonNext = (dateData:any) => {
+  // console.log('ssas',new Date(Date.now()).toISOString().slice(0, 10))
+  console.log('a',dateData)
+   if (parseInt(dateData) >= Date.now() || ( dateData === new Date(Date.now()).toISOString().slice(0, 10) )) {
+      setDisableButton(true)
+   }  else {
+    setDisableButton(false)
+  }
+  // setDisableButton(false)
+}
+
+
   useEffect(() => {
     loadPictureOfTheDay();
 
@@ -33,21 +45,29 @@ function App(props: any) {
   }, [date]);
 
   const loadPictureOfTheDay = async () => {
-    return await new Promise((resolve) => {
-      resolve(loadPicture());
-    });
+    try {
+      return await new Promise((resolve) => {
+        resolve(loadPicture());
+        
+      });
+    } catch (error) {
+      setLoading(false)
+    }
+  
   };
 
   const loadPicture = async () => {
-    // load picture of the day from local storage
+   
+       // load picture of the day from local storage
     let picOfTheDay: any = localStorage.getItem(PICOFTHEDAY);
 
     if (
-      picOfTheDay === null ||
-      new Date().getDate() !== new Date(today).getDate()
+     picOfTheDay === null  ||
+      new Date().getDate() !== new Date(today).getDate()  || localStorage.getItem(PICOFTHEDAY) === "undefined" ||  JSON.parse(picOfTheDay).code !== 200
     ) {
       console.log('Fetching From Api...');
       props.fetchApod(today).then((result: any) => {
+        disableButtonNext(result.date)
         if (
           date.getDate() === new Date().getDate() &&
           typeof result !== undefined
@@ -55,8 +75,8 @@ function App(props: any) {
           localStorage.setItem(PICOFTHEDAY, JSON.stringify(result));
           setLoading(false);
         }
-      });
-    } else if (
+      })
+    }  else if (
       new Date().getDate() -
         new Date(JSON.parse(picOfTheDay).date).getDate() ===
       0
@@ -66,6 +86,8 @@ function App(props: any) {
       props.fetchFromStore(picOfTheDay);
       setLoading(false);
     }
+   
+   
   };
 
   // props.apod &&  (props.apod.error || !props.apod.data)
@@ -80,23 +102,39 @@ function App(props: any) {
   } else {
     return (
       <div className='padding-left-right'>
+        {/* {JSON.stringify(props.apod)} */}
         {props.apod && (props.apod.error || !props.apod.data) ? (
-          <div className='center-flex'>
-            <Error
-              errorMessage={props.apod.error}
-              onClick={() => window.location.reload()}
-              actionTitle='refresh'
-            />
-          </div>
-        ) : (
-          <div className='padding-left-right'>
-            <Header
+          <div>
+              <Header
+              disableButtonNext={disableButtonNext}
               disableButton={disableButton}
               setDisabledButton={setDisableButton}
               date={date}
               setDate={setDate}
             />
+          <div className='center-flex'>
+            
+            <Error
+              errorMessage={props.apod.error}
+              onClick={() => window.location.reload()}
+              actionTitle='refresh'
+            />
+
+          
+          </div>
+          </div>
+        ) : (
+          <div className='padding-left-right'>
+            <Header
+              disableButtonNext={disableButtonNext}
+              disableButton={disableButton}
+              setDisabledButton={setDisableButton}
+              date={date}
+              setDate={setDate}
+            />
+            
             <Apod
+            //  date={date}
               disableButton={disableButton}
               setDisabledButton={setDisableButton}
               data={props.apod.data}

@@ -10,12 +10,14 @@ type HeaderProps = {
   setDate: (initalState: Date | ((previousState: Date) => Date)) => void;
   disableButton: boolean;
   setDisabledButton: Function;
+  disableButtonNext:any;
 };
 
 const Header: React.FC<HeaderProps> = ({
   date,
   setDate,
   setDisabledButton,
+  disableButtonNext
 }) => {
   const [maxDate, setMaxDate] = useState('');
   const [showModal, setShowModal] = useState({
@@ -44,11 +46,13 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   const handleSetDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+       let time = new Date(new Date().toUTCString()).getTime()
+
     const date = new Date(event.target.value);
     // if (new Date()) {
-      setDisabledButton(false);
-    // }
-    setDate(date);
+      // }
+      setDate(date);
+      disableButtonNext(time)
   };
 
   const CardSetDate = (value:any) => {
